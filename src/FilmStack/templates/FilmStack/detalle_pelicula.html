@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Detalles Película{% endblock %}
+
+{% block content %}
+    <section class="banner">
+        {% load static %}
+        <img class="img-banner" src="{% static 'img/detalles_pelicula.jpg' %}" alt="Banner de la página">
+        <h1 class="title-banner">Detalles de la Película</h1>
+    </section>
+    <article class="detalle-pelicula">
+        {% if pelicula.poster_url %}
+        <img class="detalles-poster" src="{{ pelicula.poster_url }}" alt="{{ pelicula.titulo }}">
+        {% endif %}
+        <div class="detalles">
+            <header class="header-detalle">
+                <h2 class="title-pelicula">{{ pelicula.titulo }}</h2>
+            </header>
+            <div class="detalle">
+                <h3 class="title-detalle">Descripción</h3>
+                <p class="paragraph">{{ pelicula.descripcion }}</p>
+            </div>
+            <div class="detalle">
+                <h3 class="title-detalle">Fecha de lanzamiento</h3>
+                <p class="paragraph">{{ pelicula.fecha_lanzamiento }}</p>
+            </div>
+            <div class="opciones">
+                <a href="{% url 'lista_peliculas' %}" class="button volver" onclick="history.back(); return false;">Regresar</a>
+            </div>
+        </div>
+    </article>
+{% endblock %}

@@ -29,7 +29,7 @@
             <h2 class="title-pelicula">{{ pelicula.titulo }}</h2>
             <p class="paragraph-pelicula"><strong>Fecha de lanzamiento:</strong> {{ pelicula.fecha_lanzamiento }}</p>
             <div class="button-pelicula">
-              <a href="" class="button enviar">Ver Detalles</a>
+              <a href="{% url 'detalle_pelicula' pelicula.id %}" class="button enviar">Ver Detalles</a>
             </div>
           </div>
         </li>
