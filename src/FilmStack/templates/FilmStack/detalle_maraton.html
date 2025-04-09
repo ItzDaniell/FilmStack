@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}FilmStack - Detalle Maratón{% endblock %}
+
+{% block content %}
+<section class="banner">
+  {% load static %}
+  <img class="img-banner" src="{% static 'img/descarga.jpeg' %}" alt="Banner de la página">
+  <h1 class="title-banner">Detalles de la Maratón</h1>
+</section>
+<article class="detalle-maraton">
+    <header class="title-detalle-maraton">
+        <h2 class="title">Nombre de la Maratón: {{ maraton.nombre }}</h2>
+        <div class="opciones">
+          <a href="{% url 'editar_maraton' maraton.id %}" class="button editar">Editar</a>
+          <a href="{% url 'agregar_pelicula_maraton' maraton.id %}" class="button agregar">Agregar Película</a>
+          <a href="{% url 'lista_maratones' %}" class="button volver">Volver</a>
+      </div>
+    </header>
+    <div class="detalles">
+      <div class="detalle-mar">
+        <h3 class="title-detalle">Descripción</h3>
+        <p class="paragraph">{{ maraton.descripcion }}</p>
+        <h3 class="title-pelicula">Películas:</h3>
+      </div>
+        <section class="peliculas-list">
+          <ul class=" g-layout g-layout--auto-fit-columns">
+            {% if peliculas %}
+              {% for pelicula in peliculas %}
+                <li>
+                  <div class="card">
+                    {% if pelicula.poster_url %}
+                      <img src="{{ pelicula.poster_url }}" alt="{{ pelicula.titulo }}" class="poster">
+                    {% endif %}
+                    <h2 class="title-pelicula">{{ pelicula.titulo }}</h2>
+                    <p class="paragraph-pelicula"><strong>Fecha de lanzamiento:</strong> {{ pelicula.fecha_lanzamiento }}</p>
+                    <div class="buttons-maraton">
+                      <a href="{% url 'detalle_pelicula' pelicula.id %}" class="button enviar">Ver Detalles</a>
+                      <form method="post" action="{% url 'quitar_pelicula_maraton' maraton.id pelicula.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button eliminar">Eliminar Película</button>
+                      </form>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            {% else %}
+              <div class="info">
+                <div class="mensaje">
+                  No hay Películas disponibles.
+                </div>
+              </div>
+            {% endif %}
+          </ul>
+        </section>
+    </div>
+</article>
+{% endblock %}
