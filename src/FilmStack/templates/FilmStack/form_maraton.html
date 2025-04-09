@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}FilmStack - Formulario Maratón {% endblock %}
+
+{% block content %}
+<section class="banner">
+    {% load static %}
+    <img class="img-banner" src="{% static 'img/crear_maraton.jpg' %}" alt="Banner de la página">
+    <h1 class="title-banner">
+        {% if form.instance.id %}
+            Editar Maratón	
+        {% else %}
+            Crear Maratón
+        {% endif %}
+    </h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="">Titulo</label>
+        {{ form.nombre }}
+        {% if form.nombre.errors %}
+            <div>{{ form.nombre.errors }}</div>
+        {% endif %}
+        <label for="">Descripción</label>
+        {{ form.descripcion }}
+        {% if form.nombre.errors %}
+            <div>{{ form.nombre.errors }}</div>
+        {% endif %}
+        <div>
+            <a href="{% url 'lista_maratones' %}">Volver</a>
+            <button type="submit">
+                {% if form.instance.id %}
+                    Enviar
+                {% else %}
+                    Crear
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</section>

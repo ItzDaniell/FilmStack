@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}FilmStack - Maratones{% endblock %}
+
+{% block content %}
+<section class="banner">
+    {% load static %}
+    <img class="img-banner" src="{% static 'img/maraton.jpeg' %}" alt="Banner de la página">
+    <h1 class="title-banner">Maratones</h1>
+    <span class="paragraph-banner">Crea a una maratón con tus películas preferidas</span>
+</section>
+<section class="maratones-list">
+    <ul class="g-layout">
+        {% if maratones %}
+            {% for maraton in maratones %}
+                <li class="maraton">
+                    <h2 class="title-maraton">Nombre del maratón: {{ maraton.nombre }}</h2>
+                    <p class="paragraph-maraton"><strong>Descripción:</strong> {{ maraton.descripcion }}</p>
+                    <p class="paragraph-maraton"><strong>Películas:</strong> {{ maraton.cantidad_peliculas }}</p>
+                    <div class="buttons-maraton">
+                        <a href="" class="button enviar">Ver Detalles</a>
+                        <form method="post" action="" class="form-eliminar">
+                            {% csrf_token %}
+                            <button type="submit" class="button eliminar">Eliminar</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <div class="info">
+                <div class="mensaje">
+                    No hay maratones disponibles.
+                    <a href="" class="button agregar">Crea el primero</a>
+                </div>
+            </div>
+        {% endif %}
+      </ul>
+</section>
+{% endblock %}
