@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}FilmStack{% endblock %}
+
+{% block content %}
+<section class="banner">
+  {% load static %}
+  <img class="img-banner" src="{% static 'img/banner.avif' %}" alt="Banner de la página">
+  <h1 class="title-banner">Bienvenido a FilmStack</h1>
+  <span class="paragraph-banner">¡Descubre y disfruta de una nueva experiencia con nuestras películas y maratones exclusivos! 🎬✨</span>
+</section>
+
+<section class="section flexbox">
+  <h1 class="section-title">Películas Recientes</h1>
+  <form method="get" action="{% url 'lista_peliculas' %}">
+    <input type="text" name="q" value="{{ query }}" placeholder="Buscar película..." class="input-busqueda">
+    <button type="submit" class="button enviar">Buscar</button>
+  </form>
+</section>
+
+  <ul class=" g-layout g-layout--auto-fit-columns">
+    {% if peliculas %}
+      {% for pelicula in peliculas %}
+        <li>
+          <div class="card">
+            {% if pelicula.poster_url %}
+              <img src="{{ pelicula.poster_url }}" alt="{{ pelicula.titulo }}" class="poster">
+            {% endif %}
+            <h2 class="title-pelicula">{{ pelicula.titulo }}</h2>
+            <p class="paragraph-pelicula"><strong>Fecha de lanzamiento:</strong> {{ pelicula.fecha_lanzamiento }}</p>
+            <div class="button-pelicula">
+              <a href="" class="button enviar">Ver Detalles</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    {% else %}
+      <div class="info">
+        <div class="mensaje">
+          No hay Películas disponibles.
+        </div>
+      </div>
+    {% endif %}
+  </ul>
+{% endblock %}
