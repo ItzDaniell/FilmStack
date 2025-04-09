@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FilmStack{% endblock %}</title>
+</head>
+<body class="body">
+    <header class="header">
+        <nav class="nav flexbox">
+            <div class="title flexbox">
+                <span class="title-header">FilmStack</span>
+            </div>
+            <ul class="list gap-2 flexbox">
+                <li>
+                    <a href="{% url 'lista_peliculas' %}" class="link">Películas</a>
+                </li>
+                <li>
+                    <a href="{% url 'lista_maratones' %}" class="link">Maratones</a>
+                </li>
+                <li>
+                    <a href="{% url 'crear_maraton' %}" class="link">Crear Maratón</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+</body>
+</html>
