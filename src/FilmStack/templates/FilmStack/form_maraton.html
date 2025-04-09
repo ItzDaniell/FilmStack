@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}FilmStack - Formulario Maratón {% endblock %}
+{% block title %}FilmStack - Formulario Maratón{% endblock %}
 
 {% block content %}
 <section class="banner">
@@ -13,27 +13,36 @@
             Crear Maratón
         {% endif %}
     </h1>
-    <form method="post">
+</section>
+<section class="form-section">
+    <form method="post" class="form">
         {% csrf_token %}
-        <label for="">Titulo</label>
-        {{ form.nombre }}
-        {% if form.nombre.errors %}
-            <div>{{ form.nombre.errors }}</div>
-        {% endif %}
-        <label for="">Descripción</label>
-        {{ form.descripcion }}
-        {% if form.nombre.errors %}
-            <div>{{ form.nombre.errors }}</div>
-        {% endif %}
         <div>
-            <a href="{% url 'lista_maratones' %}">Volver</a>
-            <button type="submit">
+            <label for="{{ form.nombre.id_for_label }}">Título</label>
+            {{ form.nombre }}
+            {% if form.nombre.errors %}
+                <div>{{ form.nombre.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+            {{ form.descripcion }}
+            {% if form.descripcion.errors %}
+                <div>{{ form.descripcion.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-opciones">
+            <a href="{% url 'lista_maratones' %}" class="button volver" onclick="history.back(); return false;">Cancelar</a>
+            <button type="submit" class="button enviar">
                 {% if form.instance.id %}
-                    Enviar
+                    Actualizar Maratón
                 {% else %}
-                    Crear
+                    Crear Maratón
                 {% endif %}
             </button>
         </div>
     </form>
 </section>
+{% endblock %}

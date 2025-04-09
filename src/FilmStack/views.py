@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pelicula, Maraton
+from .forms import MaratonForm
 
 def lista_peliculas(request):
     """Vista para ver la lista de películas con opción de búsqueda"""
@@ -22,4 +23,13 @@ def lista_maratones(request):
     return render(request, 'FilmStack/lista_maratones.html', {'maratones': maratones})
 
 def crear_maraton(request):
+    """Vista para crear un nuevo maraton"""
+    if request.method == 'POST':
+        form = MaratonForm(request.POST)
+        if form.is_valid():
+            maraton = form.save()
+            return redirect('agregar_pelicula_maraton', maraton_id=maraton.id)
+    else:
+        form = MaratonForm()
     
+    return render(request, 'FilmStack/form_maraton.html', {'form': form})

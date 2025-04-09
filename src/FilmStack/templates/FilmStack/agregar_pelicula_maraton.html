@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}FilmStack - Agregar Película{% endblock %}
+
+{% block content %}
+<section class="banner">
+    {% load static %}
+    <img class="img-banner" src="{% static 'img/banner.avif' %}" alt="Banner de la página">
+    <h1 class="title-banner">Añadir Películas</h1>
+  </section>
+<div class="">
+    <form method="post" class="form-section">
+        <h2>Añadir Película a: {{ maraton.nombre }}</h2>
+        {% csrf_token %}
+        <div>
+            {{ form.pelicula.label_tag }}
+            {{ form.pelicula }}
+            {% if form.pelicula.errors %}
+                <div class="text-danger">{{ form.pelicula.errors }}</div>
+            {% endif %}
+        </div>
+        <div class="form-opciones">
+            <a href="{% url 'lista_maratones' %}" class="button volver">Cancelar</a>
+            <button type="submit" name="add_another" class="button agregar">Guardar y añadir otra</button>
+            <button type="submit" name="finish" class="button enviar">Guardar y terminar</button>
+        </div>
+    </form>
+    <h3 class="title-peliculas">Películas en este maratón:</h3>
+    <ul class=" g-layout g-layout--auto-fit-columns">
+        {% if peliculas %}
+          {% for pelicula in peliculas %}
+            <li>
+              <div class="card">
+                {% if pelicula.poster_url %}
+                  <img src="{{ pelicula.poster_url }}" alt="{{ pelicula.titulo }}" class="poster">
+                {% endif %}
+                <h2 class="title-pelicula">{{ pelicula.titulo }}</h2>
+                <p class="paragraph-pelicula"><strong>Fecha de lanzamiento:</strong> {{ pelicula.fecha_lanzamiento }}</p>
+                <p class="paragraph-pelicula"><strong>Género:</strong> {{ pelicula.genero }}</p>
+                <div class="button-pelicula">
+                  <a href="{% url 'detalle_pelicula' pelicula.id %}" class="button enviar">Ver Detalles</a>
+                </div>
+              </div>
+            </li>
+          {% endfor %}
+        {% else %}
+          <div class="info">
+            <div class="mensaje">
+              No hay Películas disponibles.
+            </div>
+          </div>
+        {% endif %}
+      </ul>
+</div>
+{% endblock %}
